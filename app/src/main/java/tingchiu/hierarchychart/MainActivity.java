@@ -3,8 +3,13 @@ package tingchiu.hierarchychart;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
 //                        (NODE_WIDTH + NODE_HORIZONTAL_MARGIN) * BOTTOM_CHILDREN_COUNT + NODE_HORIZONTAL_MARGIN / 2,
 //                        (NODE_HEIGHT + NODE_VERTICAL_MARGIN) * TOTAL_LAYER));
 
-//        zoomableLayout.setLayoutParams(new FrameLayout.LayoutParams(
-//                getResources().getDisplayMetrics().widthPixels * 3, ViewGroup.LayoutParams.MATCH_PARENT));
+        zoomableLayout.setLayoutParams(new FrameLayout.LayoutParams(
+                getResources().getDisplayMetrics().widthPixels * 3, ViewGroup.LayoutParams.MATCH_PARENT));
 //        layout.setLayoutParams(
 //                new FrameLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels * 3, ViewGroup.LayoutParams.MATCH_PARENT));
 
@@ -74,16 +79,13 @@ public class MainActivity extends AppCompatActivity {
         //layer 1
         new Node(this, layout, 0, 0);
 
+        scrollLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollLayout.scrollTo(scrollLayout.getChildAt(0).getWidth() / 2 - getResources().getDisplayMetrics().widthPixels / 2, 0);
+            }
+        });
+
 
     }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        //init scroll to center
-//        double centerX = getResources().getDisplayMetrics().widthPixels * 1.5;
-//        scrollLayout.scrollTo((int) centerX, 0);
-//    }
-
 }

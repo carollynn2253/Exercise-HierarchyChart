@@ -16,7 +16,7 @@ public class GlobalConstant {
 
     public static final int TOP_LAYER_CHILD_NUMBER = 2;
     public static final int SECOND_LAYER_CHILD_NUMBER = 2;
-    public static final int THIRD_LAYER_CHILD_NUMBER = 3;
+    public static final int THIRD_LAYER_CHILD_NUMBER = 2;
 
     public static final int BOTTOM_CHILDREN_COUNT = TOP_LAYER_CHILD_NUMBER * SECOND_LAYER_CHILD_NUMBER * THIRD_LAYER_CHILD_NUMBER;
 
