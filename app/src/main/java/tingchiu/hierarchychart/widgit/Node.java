@@ -67,21 +67,21 @@ public class Node {
 
 
         //set click listener
-//        if (layer != TOTAL_LAYER - 1) {
-//            node.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Log.d("tttttt", "layer:" + layer + ", position:" + position);
-//                }
-//            });
-//        } else {
-//            node.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Log.d("tttttt", "bottom layer at position:" + position);
-//                }
-//            });
-//        }
+        if (layer != TOTAL_LAYER - 1) {
+            node.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("tttttt", "layer:" + layer + ", position:" + position);
+                }
+            });
+        } else {
+            node.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("tttttt", "bottom layer at position:" + position);
+                }
+            });
+        }
 
 
         //draw link line

@@ -58,15 +58,15 @@ public class MainActivity extends AppCompatActivity {
 //                new FrameLayout.LayoutParams(
 //                        (NODE_WIDTH + NODE_HORIZONTAL_MARGIN) * BOTTOM_CHILDREN_COUNT + NODE_HORIZONTAL_MARGIN / 2,
 //                        (NODE_HEIGHT + NODE_VERTICAL_MARGIN) * TOTAL_LAYER));
-        layout.setLayoutParams(
-                new FrameLayout.LayoutParams(
-                        (NODE_WIDTH + NODE_HORIZONTAL_MARGIN) * BOTTOM_CHILDREN_COUNT + NODE_HORIZONTAL_MARGIN / 2,
-                        (NODE_HEIGHT + NODE_VERTICAL_MARGIN) * TOTAL_LAYER));
+//        layout.setLayoutParams(
+//                new FrameLayout.LayoutParams(
+//                        (NODE_WIDTH + NODE_HORIZONTAL_MARGIN) * BOTTOM_CHILDREN_COUNT + NODE_HORIZONTAL_MARGIN / 2,
+//                        (NODE_HEIGHT + NODE_VERTICAL_MARGIN) * TOTAL_LAYER));
 
         zoomableLayout.setLayoutParams(new FrameLayout.LayoutParams(
                 getResources().getDisplayMetrics().widthPixels * 3, ViewGroup.LayoutParams.MATCH_PARENT));
-        layout.setLayoutParams(
-                new FrameLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels * 3, ViewGroup.LayoutParams.MATCH_PARENT));
+//        layout.setLayoutParams(
+//                new FrameLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels * 3, ViewGroup.LayoutParams.MATCH_PARENT));
 
 
         //layer 4
