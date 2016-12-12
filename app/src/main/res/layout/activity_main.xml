@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scroll_layout"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_centerHorizontal="true">
 
-    <tingchiu.hierarchychart.widgit.ZoomableLayout
-        android:id="@+id/zoomable_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_margin="16dp"
-        android:background="#000000"
-        tools:context="tingchiu.hierarchychart.MainActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/layout"
+    <!--tree-->
+    <ScrollView
+        android:id="@+id/vertical_scroll_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <!--<RelativeLayout-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <HorizontalScrollView
+            android:id="@+id/horizontal_scroll_view"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
+            android:layout_height="wrap_content">
 
-    </tingchiu.hierarchychart.widgit.ZoomableLayout>
+            <!--for padding only-->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
 
-</HorizontalScrollView>
+                <FrameLayout
+                    android:id="@+id/tree_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+        </HorizontalScrollView>
+        <!--</RelativeLayout>-->
+    </ScrollView>
+
+</RelativeLayout>

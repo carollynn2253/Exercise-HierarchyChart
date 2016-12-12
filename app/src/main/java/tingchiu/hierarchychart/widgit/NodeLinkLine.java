@@ -6,16 +6,16 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
 
-import tingchiu.hierarchychart.GlobalConstant;
-
-import static tingchiu.hierarchychart.GlobalConstant.BOTTOM_CHILDREN_COUNT;
+import static tingchiu.hierarchychart.GlobalConstant.BOTTOM_LEVEL_TOTAL_CHILDREN;
+import static tingchiu.hierarchychart.GlobalConstant.LINE_COLOR;
 import static tingchiu.hierarchychart.GlobalConstant.LINE_WIDTH;
 import static tingchiu.hierarchychart.GlobalConstant.NODE_HEIGHT;
 import static tingchiu.hierarchychart.GlobalConstant.NODE_HORIZONTAL_MARGIN;
+import static tingchiu.hierarchychart.GlobalConstant.NODE_VERTICAL_MARGIN;
 import static tingchiu.hierarchychart.GlobalConstant.NODE_WIDTH;
-import static tingchiu.hierarchychart.GlobalConstant.TOTAL_LAYER;
-import static tingchiu.hierarchychart.GlobalConstant.getChildNumber;
-import static tingchiu.hierarchychart.GlobalConstant.getChildrenCount;
+import static tingchiu.hierarchychart.GlobalConstant.TOTAL_LEVEL;
+import static tingchiu.hierarchychart.GlobalConstant.getLevelChildNumber;
+import static tingchiu.hierarchychart.GlobalConstant.getLevelChildrenTotal;
 
 /**
  * Created by ting.chiu on 2016/10/5.
@@ -24,29 +24,23 @@ import static tingchiu.hierarchychart.GlobalConstant.getChildrenCount;
 //TODO: not finish, only top and bottom
 public class NodeLinkLine extends View {
 
-    View node;
-    int layer;
+    View nodeView;
+    boolean showTopParent;
+    int level;
 
     Paint paint;
+    Paint dashPaint;
     Canvas canvas;
 
-    public NodeLinkLine(Context context, View node, int layer) {
+    public NodeLinkLine(Context context, View nodeView, boolean showTopParent, int level) {
         super(context);
 
-        this.node = node;
-        this.layer = layer;
+        this.nodeView = nodeView;
+        this.showTopParent = showTopParent;
+        this.level = level;
 
         paint = new Paint();
-        canvas = new Canvas();
-    }
-
-    public NodeLinkLine(Context context, View node, int layer, int position) {
-        super(context);
-
-        this.node = node;
-        this.layer = layer;
-
-        paint = new Paint();
+        dashPaint = new Paint();
         canvas = new Canvas();
     }
 
@@ -55,36 +49,45 @@ public class NodeLinkLine extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        paint.setColor(Color.RED);
+        paint.setColor(Color.parseColor(LINE_COLOR));
+        paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(LINE_WIDTH);
         paint.setAntiAlias(true);
 
+
+        int layoutLevel = level;
+        int totalLevel = TOTAL_LEVEL;
+
+        int totalWidth = BOTTOM_LEVEL_TOTAL_CHILDREN * NODE_WIDTH + (BOTTOM_LEVEL_TOTAL_CHILDREN - 1) * NODE_HORIZONTAL_MARGIN;
+
         //top vertical line
-        if (layer != 0) {
-            canvas.drawLine(node.getLeft() + node.getWidth() / 2, node.getTop() - GlobalConstant.NODE_VERTICAL_MARGIN / 2,
-                    node.getLeft() + node.getWidth() / 2, node.getTop(),
+        if (layoutLevel != 0) {
+            canvas.drawLine(nodeView.getLeft() + nodeView.getWidth() / 2, nodeView.getTop() - NODE_VERTICAL_MARGIN / 2,
+                    nodeView.getLeft() + nodeView.getWidth() / 2, nodeView.getTop(),
                     paint);
         }
-
-        paint.setColor(Color.BLUE);
 
         //bottom vertical line
-        if (layer != TOTAL_LAYER - 1) {
-            canvas.drawLine(node.getLeft() + node.getWidth() / 2, node.getTop() + NODE_HEIGHT,
-                    node.getLeft() + node.getWidth() / 2, node.getTop() + NODE_HEIGHT + GlobalConstant.NODE_VERTICAL_MARGIN / 2,
+        if (layoutLevel != totalLevel - 1) {
+            canvas.drawLine(nodeView.getLeft() + nodeView.getWidth() / 2, nodeView.getTop() + NODE_HEIGHT,
+                    nodeView.getLeft() + nodeView.getWidth() / 2, nodeView.getTop() + NODE_HEIGHT + NODE_VERTICAL_MARGIN / 2,
                     paint);
         }
 
-        paint.setColor(Color.GREEN);
-
         //bottom horizontal line
-        int totalWidth = BOTTOM_CHILDREN_COUNT * NODE_WIDTH + (BOTTOM_CHILDREN_COUNT - 1) * NODE_HORIZONTAL_MARGIN;
-        if (layer != TOTAL_LAYER - 1) {
+        if (layoutLevel == 0) {
             canvas.drawLine(
-                    node.getLeft() + node.getWidth() / 2 - totalWidth / getChildrenCount(layer) / 2 * (getChildNumber(layer) - 1) - LINE_WIDTH,
-                    node.getTop() + NODE_HEIGHT + GlobalConstant.NODE_VERTICAL_MARGIN / 2,
-                    node.getLeft() + node.getWidth() / 2 + totalWidth / getChildrenCount(layer) / 2 * (getChildNumber(layer) - 1) + LINE_WIDTH,
-                    node.getTop() + NODE_HEIGHT + GlobalConstant.NODE_VERTICAL_MARGIN / 2,
+                    nodeView.getLeft() + nodeView.getWidth() / 2 - totalWidth / getLevelChildrenTotal(level) / 2 * (getLevelChildNumber(level - 1) - 1) - LINE_WIDTH + NODE_HORIZONTAL_MARGIN / 2,
+                    nodeView.getTop() + NODE_HEIGHT + NODE_VERTICAL_MARGIN / 2,
+                    nodeView.getLeft() + nodeView.getWidth() / 2 + totalWidth / getLevelChildrenTotal(level) / 2 * (getLevelChildNumber(level - 1) - 1) + LINE_WIDTH - NODE_HORIZONTAL_MARGIN / 2,
+                    nodeView.getTop() + NODE_HEIGHT + NODE_VERTICAL_MARGIN / 2,
+                    paint);
+        } else if (layoutLevel != totalLevel - 1) {
+            canvas.drawLine(
+                    nodeView.getLeft() + nodeView.getWidth() / 2 - totalWidth / getLevelChildrenTotal(level) / 2 * (getLevelChildNumber(level - 1) - 1) - LINE_WIDTH,
+                    nodeView.getTop() + NODE_HEIGHT + NODE_VERTICAL_MARGIN / 2,
+                    nodeView.getLeft() + nodeView.getWidth() / 2 + totalWidth / getLevelChildrenTotal(level) / 2 * (getLevelChildNumber(level - 1) - 1) + LINE_WIDTH,
+                    nodeView.getTop() + NODE_HEIGHT + NODE_VERTICAL_MARGIN / 2,
                     paint);
         }
 
